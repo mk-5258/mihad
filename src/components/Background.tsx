@@ -47,7 +47,7 @@ export function Background() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-0">
+    <div className="fixed inset-0 z-0 overflow-hidden">
       {/* Base dark layer */}
       <div className="absolute inset-0 bg-dark" />
 
@@ -61,7 +61,7 @@ export function Background() {
 
       {/* Primary radial light — scroll-reactive */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute"
         style={{
           left: lightX,
           top: lightY,

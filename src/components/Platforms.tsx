@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
-   Platforms — WHERE I CREATE
-   4 distinct interactive platform objects
+   Platforms — Editorial typography sections
+   No cards, no images — pure text composition
    ═══════════════════════════════════════════ */
 
 import { useRef } from "react";
@@ -11,64 +11,71 @@ import {
   useInView,
   useSpring,
 } from "framer-motion";
-import { ArrowRight, Play, Camera, User, Users } from "lucide-react";
 
 const platforms = [
   {
-    id: "youtube",
-    label: "YOUTUBE",
-    handle: "@mkeditz494",
-    description: "Editing, shorts, and creative content.",
+    number: "02",
+    label: "PLATFORM",
+    title: "YOUTUBE",
+    stat: "2K+",
+    statLabel: "SUBSCRIBERS",
+    tags: ["EDITING", "SHORTS", "CREATIVE CONTENT"],
+    ctaText: "WATCH CHANNEL →",
     url: "https://www.youtube.com/@mkeditz494",
-    cta: "Watch",
-    icon: Play,
-    accent: "rgba(192, 57, 43, 0.06)",
-    accentBorder: "rgba(192, 57, 43, 0.2)",
-    accentText: "rgba(192, 57, 43, 0.7)",
-    gradient: "linear-gradient(145deg, #1a1215 0%, #110d10 50%, #1a1215 100%)",
+    accentColor: "rgba(192, 57, 43, 0.7)",
+    accentBorder: "rgba(192, 57, 43, 0.25)",
+    bgXFrom: "8%",
+    bgXTo: "-12%",
   },
   {
-    id: "ig-editing",
-    label: "INSTAGRAM",
-    handle: "@mk_ed1tz",
-    description: "Editing reels and YouTube Shorts.",
-    url: "https://www.instagram.com/mk_ed1tz/reels/?__pwa=1#",
-    cta: "View Reels",
-    icon: Camera,
-    accent: "rgba(200, 130, 200, 0.05)",
-    accentBorder: "rgba(200, 130, 200, 0.18)",
-    accentText: "rgba(200, 130, 200, 0.65)",
-    gradient: "linear-gradient(155deg, #17151a 0%, #100e14 50%, #17151a 100%)",
-  },
-  {
-    id: "ig-personal",
-    label: "INSTAGRAM",
-    handle: "@mihadd___",
-    description: "Personal moments and thoughts.",
-    url: "https://www.instagram.com/mihadd___/?__pwa=1#",
-    cta: "Follow",
-    icon: User,
-    accent: "rgba(140, 160, 180, 0.05)",
-    accentBorder: "rgba(140, 160, 180, 0.15)",
-    accentText: "rgba(140, 160, 180, 0.6)",
-    gradient: "linear-gradient(160deg, #14181c 0%, #0e1116 50%, #14181c 100%)",
-  },
-  {
-    id: "discord",
-    label: "DISCORD",
-    handle: "Worldwide Community",
-    description: "A global creative community.",
+    number: "03",
+    label: "COMMUNITY",
+    title: "DISCORD",
+    stat: "",
+    statLabel: "WORLDWIDE COMMUNITY",
+    tags: ["OWNER", "COMMUNITY BUILDER"],
+    ctaText: "JOIN COMMUNITY →",
     url: "https://discord.gg/wXSpfBQMqy",
-    cta: "Join",
-    icon: Users,
-    accent: "rgba(88, 101, 242, 0.06)",
-    accentBorder: "rgba(88, 101, 242, 0.2)",
-    accentText: "rgba(88, 101, 242, 0.7)",
-    gradient: "linear-gradient(150deg, #141620 0%, #0e101a 50%, #141620 100%)",
+    accentColor: "rgba(88, 101, 242, 0.7)",
+    accentBorder: "rgba(88, 101, 242, 0.25)",
+    bgXFrom: "-10%",
+    bgXTo: "15%",
+  },
+  {
+    number: "04",
+    label: "EDITING",
+    title: "INSTAGRAM",
+    stat: "@mk_ed1tz",
+    statLabel: "EDITING • REELS • SHORTS",
+    tags: ["@mk_ed1tz"],
+    ctaText: "VIEW PROFILE →",
+    url: "https://www.instagram.com/mk_ed1tz/reels/?__pwa=1#",
+    accentColor: "rgba(200, 130, 200, 0.65)",
+    accentBorder: "rgba(200, 130, 200, 0.2)",
+    bgXFrom: "5%",
+    bgXTo: "-10%",
+  },
+  {
+    number: "05",
+    label: "PERSONAL",
+    title: "INSTAGRAM",
+    stat: "@mihadd___",
+    statLabel: "PERSONAL PROFILE",
+    tags: ["@mihadd___"],
+    ctaText: "VIEW PROFILE →",
+    url: "https://www.instagram.com/mihadd___/?__pwa=1#",
+    accentColor: "rgba(140, 160, 180, 0.6)",
+    accentBorder: "rgba(140, 160, 180, 0.18)",
+    bgXFrom: "-6%",
+    bgXTo: "8%",
   },
 ];
 
-export function Platforms() {
+function PlatformSection({
+  platform,
+}: {
+  platform: (typeof platforms)[number];
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
@@ -77,151 +84,226 @@ export function Platforms() {
     offset: ["start end", "end start"],
   });
 
-  const headingY = useSpring(
-    useTransform(scrollYProgress, [0.05, 0.4], [50, -10]),
+  /* ── Background text parallax ── */
+  const bgX = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [platform.bgXFrom, platform.bgXTo],
+  );
+  const bgText = useSpring(bgX, { stiffness: 50, damping: 30 });
+
+  /* ── Title moves slightly ── */
+  const titleY = useSpring(
+    useTransform(scrollYProgress, [0.05, 0.5], [40, -10]),
     { stiffness: 70, damping: 25 },
   );
 
-  const indexX = useSpring(
-    useTransform(scrollYProgress, [0.05, 0.35], [0, 12]),
+  /* ── Stat scale ── */
+  const statScale = useTransform(scrollYProgress, [0.1, 0.45], [0.92, 1]);
+  const statOpacity = useTransform(scrollYProgress, [0.1, 0.35], [0, 1]);
+
+  /* ── Line expand ── */
+  const lineScale = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
+
+  /* ── CTA ── */
+  const ctaY = useSpring(
+    useTransform(scrollYProgress, [0.2, 0.55], [15, 0]),
     { stiffness: 80, damping: 20 },
   );
 
+  const isInstagram = platform.title === "INSTAGRAM";
+
   return (
-    <section
-      id="platforms"
+    <div
       ref={sectionRef}
-      className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
+      className="relative py-20 md:py-28 lg:py-36 overflow-hidden"
     >
-      {/* Background watermark */}
+      {/* ── Background watermark text ── */}
       <motion.div
-        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none"
-        style={{
-          y: useTransform(scrollYProgress, [0, 1], [30, -30]),
-        }}
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        style={{ x: bgText }}
       >
-        <span className="font-display text-[clamp(5rem,14vw,12rem)] font-medium text-off-white/[0.015] leading-none tracking-tight">
-          PLATFORMS
+        <span
+          className="absolute font-display font-medium text-off-white/[0.018] whitespace-nowrap"
+          style={{
+            top: "50%",
+            left: "0",
+            transform: "translateY(-50%)",
+            fontSize: "clamp(4rem, 12vw, 11rem)",
+            letterSpacing: "-0.04em",
+          }}
+        >
+          {platform.title}
         </span>
       </motion.div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section index */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        {/* ── Section header row ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16"
-          style={{ x: indexX }}
+          className="flex items-baseline gap-3 mb-12 md:mb-16"
         >
           <span className="font-body text-[10px] font-medium tracking-[0.35em] uppercase text-muted/50">
-            02 / Platforms
+            {platform.number} / {platform.label}
           </span>
         </motion.div>
 
-        {/* Heading */}
-        <motion.div
-          className="mb-14 md:mb-18"
-          style={{ y: headingY }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-            className="overflow-hidden"
-          >
-            <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white">
-              Where I create.
-            </h2>
-          </motion.div>
-        </motion.div>
+        {/* ── Main layout ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* ── Left: Title + Stat ── */}
+          <div className="lg:col-span-7">
+            {/* Title */}
+            <motion.div
+              className="overflow-hidden mb-2"
+              style={{ y: titleY }}
+            >
+              <motion.h2
+                initial={{ y: "110%" }}
+                animate={isInView ? { y: "0%" } : {}}
+                transition={{
+                  duration: 1.0,
+                  ease: [0.76, 0, 0.24, 1],
+                }}
+                className="font-display font-medium leading-[0.88] tracking-[-0.03em] text-off-white"
+                style={{
+                  fontSize: isInstagram
+                    ? "clamp(2.5rem, 6vw, 5rem)"
+                    : "clamp(3rem, 8vw, 7rem)",
+                  wordBreak: "break-word",
+                  overflowWrap: "break-word",
+                }}
+              >
+                {platform.title}
+              </motion.h2>
+            </motion.div>
 
-        {/* Platform grid — 2x2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {platforms.map((platform, i) => {
-            const Icon = platform.icon;
+            {/* Stat or Handle */}
+            {platform.stat && (
+              <motion.div
+                className="mt-6 md:mt-8 mb-4"
+                style={{ scale: statScale, opacity: statOpacity }}
+              >
+                <span
+                  className="font-heading font-semibold tracking-tight block"
+                  style={{
+                    fontSize: isInstagram
+                      ? "clamp(1.8rem, 4vw, 3rem)"
+                      : "clamp(3rem, 7vw, 6rem)",
+                    color: platform.accentColor,
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {platform.stat}
+                </span>
+                <span className="font-body text-[10px] md:text-[11px] font-medium tracking-[0.25em] uppercase text-muted/45 mt-2 block">
+                  {platform.statLabel}
+                </span>
+              </motion.div>
+            )}
 
-            return (
+            {/* Tags */}
+            <motion.div
+              className="flex flex-wrap gap-x-3 gap-y-1.5 mt-6"
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.7,
+                ease: [0.25, 1, 0.5, 1],
+                delay: 0.3,
+              }}
+            >
+              {platform.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="font-body text-[10px] md:text-[11px] font-light tracking-[0.2em] uppercase text-muted/40"
+                >
+                  {tag}
+                  {i < platform.tags.length - 1 && (
+                    <span className="ml-3 text-slate/20">·</span>
+                  )}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── Right: CTA ── */}
+          <div className="lg:col-span-5 flex flex-col justify-end">
+            {/* Thin divider line */}
+            <motion.div
+              className="editorial-divider mb-8 md:mb-10"
+              style={{
+                scaleX: lineScale,
+                transformOrigin: "left",
+              }}
+            />
+
+            {/* CTA */}
+            <motion.div style={{ y: ctaY }}>
               <motion.a
-                key={platform.id}
                 href={platform.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor={platform.cta.toUpperCase()}
-                initial={{ opacity: 0, y: 30 }}
+                data-cursor={platform.ctaText.replace(" →", "")}
+                initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{
-                  delay: 0.2 + i * 0.1,
-                  duration: 0.8,
+                  duration: 0.7,
                   ease: [0.25, 1, 0.5, 1],
+                  delay: 0.4,
                 }}
-                className="group relative overflow-hidden rounded-sm border border-slate/8 hover:border-slate/15 transition-all duration-500 cursor-none"
-                style={{ background: platform.gradient }}
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase transition-all duration-500 cursor-none"
+                style={{
+                  border: `1px solid ${platform.accentBorder}`,
+                  color: platform.accentColor,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = platform.accentColor;
+                  e.currentTarget.style.background = `${platform.accentBorder.replace("0.25", "0.05")}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = platform.accentBorder;
+                  e.currentTarget.style.background = "transparent";
+                }}
               >
-                {/* Accent glow */}
-                <div
-                  className="absolute top-0 right-0 w-[60%] h-[60%] pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{
-                    background: `radial-gradient(ellipse at center, ${platform.accent} 0%, transparent 70%)`,
-                    filter: "blur(40px)",
-                  }}
-                />
-
-                <div className="relative p-6 md:p-8 lg:p-10">
-                  {/* Header: icon + label */}
-                  <div className="flex items-center gap-3 mb-5">
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-500"
-                      style={{ borderColor: platform.accentBorder }}
-                    >
-                      <Icon
-                        size={14}
-                        className="transition-colors duration-500"
-                        style={{ color: platform.accentText }}
-                      />
-                    </div>
-                    <span
-                      className="font-body text-[10px] font-medium tracking-[0.3em] uppercase"
-                      style={{ color: platform.accentText }}
-                    >
-                      {platform.label}
-                    </span>
-                  </div>
-
-                  {/* Handle */}
-                  <h3 className="font-heading text-[clamp(1.5rem,3vw,2.2rem)] font-semibold text-off-white tracking-tight mb-2 group-hover:text-white transition-colors duration-500">
-                    {platform.handle}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="font-body text-[13px] font-light leading-relaxed text-muted/55 mb-6 max-w-xs">
-                    {platform.description}
-                  </p>
-
-                  {/* CTA */}
-                  <div className="flex items-center gap-2">
-                    <span className="font-body text-[11px] font-medium tracking-[0.15em] uppercase text-off-white/60 group-hover:text-off-white/80 transition-colors duration-500">
-                      {platform.cta}
-                    </span>
-                    <ArrowRight
-                      size={12}
-                      className="text-off-white/30 group-hover:text-off-white/50 transition-all duration-500 group-hover:translate-x-1"
-                    />
-                  </div>
-                </div>
-
-                {/* Bottom accent line on hover */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                  style={{
-                    background: `linear-gradient(90deg, ${platform.accentBorder}, transparent)`,
-                  }}
-                />
+                <span>{platform.ctaText.replace(" →", "")}</span>
+                <span className="transition-transform duration-500 group-hover:translate-x-1">
+                  →
+                </span>
               </motion.a>
-            );
-          })}
+            </motion.div>
+          </div>
         </div>
       </div>
+
+      {/* ── Bottom separator ── */}
+      <div className="absolute bottom-0 left-0 right-0 px-6 md:px-12 lg:px-16">
+        <div className="max-w-[1400px] mx-auto editorial-divider" />
+      </div>
+    </div>
+  );
+}
+
+export function Platforms() {
+  return (
+    <section id="platforms" className="relative overflow-hidden">
+      {/* ── Section heading ── */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-36 lg:pt-44">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+          className="overflow-hidden"
+        >
+          <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white">
+            Where I create.
+          </h2>
+        </motion.div>
+      </div>        {platforms.map((platform) => (
+        <PlatformSection key={platform.number} platform={platform} />
+      ))}
     </section>
   );
 }

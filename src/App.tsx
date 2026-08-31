@@ -10,8 +10,6 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Platforms } from "./components/Platforms";
-import { DiscordSection } from "./components/DiscordSection";
-import { YouTubeSection } from "./components/YouTubeSection";
 import { InstagramSection } from "./components/InstagramSection";
 import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
@@ -33,8 +31,6 @@ function App() {
           <Hero />
           <About />
           <Platforms />
-          <DiscordSection />
-          <YouTubeSection />
           <InstagramSection />
           <FinalCTA />
         </main>

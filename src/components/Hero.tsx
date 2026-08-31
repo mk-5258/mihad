@@ -59,10 +59,6 @@ export function Hero() {
   const bgText3X = useTransform(scrollYProgress, [0, 1], ["10%", "-15%"]);
   const bgTextOpacity = useTransform(scrollYProgress, [0, 0.3, 0.6], [1, 0.6, 0]);
 
-  /* ── Decorative ring ── */
-  const ringRotate = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const ringOpacity = useTransform(scrollYProgress, [0, 0.5], [0.1, 0]);
-
   /* ── Line expands ── */
   const lineScale = useTransform(scrollYProgress, [0.05, 0.3], [0, 1]);
 
@@ -117,25 +113,9 @@ export function Hero() {
         </motion.span>
       </motion.div>
 
-      {/* ── Decorative ring ── */}
-      <motion.div
-        className="absolute pointer-events-none select-none hidden md:block"
-        style={{
-          rotate: ringRotate,
-          opacity: ringOpacity,
-          right: "10%",
-          top: "20%",
-        }}
-      >
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="50" r="48" stroke="rgba(185, 197, 206, 0.12)" strokeWidth="0.5" />
-          <circle cx="50" cy="50" r="34" stroke="rgba(185, 197, 206, 0.06)" strokeWidth="0.5" />
-        </svg>
-      </motion.div>
-
       {/* ── Main content ── */}
       {showContent && (
-        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 pt-32 md:pt-0">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-32 md:pt-0">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -179,7 +159,10 @@ export function Hero() {
                   visible: { y: "0%", transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1] } },
                 }}
                 className="font-display font-medium leading-[0.82] tracking-[-0.04em] text-white"
-                style={{ fontSize: "clamp(4.5rem, 16vw, 16rem)" }}
+                style={{
+                  fontSize: "clamp(3.5rem, 14vw, 14rem)",
+                  wordBreak: "break-word",
+                }}
               >
                 MIHAD
               </motion.h1>
@@ -202,7 +185,12 @@ export function Hero() {
                   hidden: { y: "110%" },
                   visible: { y: "0%", transition: { duration: 1.0, ease: [0.76, 0, 0.24, 1] } },
                 }}
-                className="font-display italic text-[clamp(1.6rem,4.5vw,4rem)] font-light leading-[1.1] tracking-[-0.01em] text-light/70"
+                className="font-display italic font-light tracking-[-0.01em] text-light/70"
+                style={{
+                  fontSize: "clamp(1.4rem, 4vw, 3.5rem)",
+                  lineHeight: "1.1",
+                  wordBreak: "break-word",
+                }}
               >
                 I build, edit &amp; create.
               </motion.p>

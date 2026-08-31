@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
    Instagram — Two distinct profiles
-   Different parallax speeds + horizontal movement
+   Typography-based editorial composition
    ═══════════════════════════════════════════ */
 
 import { useRef } from "react";
@@ -11,213 +11,287 @@ import {
   useInView,
   useSpring,
 } from "framer-motion";
-import { ArrowRight, Camera, User } from "lucide-react";
 
 const IG_EDITING_URL = "https://www.instagram.com/mk_ed1tz/reels/?__pwa=1#";
 const IG_PERSONAL_URL = "https://www.instagram.com/mihadd___/?__pwa=1#";
 
-export function InstagramSection() {
+function InstagramProfile({
+  number,
+  label,
+  subtitle,
+  handle,
+  tags,
+  ctaText,
+  url,
+  cursorLabel,
+  accentColor,
+  accentBorder,
+  bgXFrom,
+  bgXTo,
+  delay,
+  isInView,
+}: {
+  number: string;
+  label: string;
+  subtitle: string;
+  handle: string;
+  tags: string[];
+  ctaText: string;
+  url: string;
+  cursorLabel: string;
+  accentColor: string;
+  accentBorder: string;
+  bgXFrom: string;
+  bgXTo: string;
+  delay: number;
+  isInView: boolean;
+}) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  /* ── Heading: moves upward ── */
-  const headingY = useSpring(
-    useTransform(scrollYProgress, [0.05, 0.4], [50, -10]),
-    { stiffness: 70, damping: 25 },
+  const bgX = useSpring(
+    useTransform(scrollYProgress, [0, 1], [bgXFrom, bgXTo]),
+    { stiffness: 50, damping: 30 },
   );
 
-  /* ── Editing card: enters from left, different speed ── */
-  const editingX = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.5], [-50, 0]),
-    { stiffness: 70, damping: 25 },
-  );
-  const editingY = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.55], [30, -15]),
-    { stiffness: 60, damping: 25 },
-  );
+  const handleScale = useTransform(scrollYProgress, [0.1, 0.45], [0.92, 1]);
+  const handleOpacity = useTransform(scrollYProgress, [0.1, 0.35], [0, 1]);
 
-  /* ── Personal card: enters from right, different speed ── */
-  const personalX = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.5], [50, 0]),
-    { stiffness: 70, damping: 25 },
-  );
-  const personalY = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.55], [40, -10]),
-    { stiffness: 60, damping: 25 },
-  );
+  const lineScale = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
-  /* ── Subtle rotations — extremely subtle ── */
-  const editingRotate = useTransform(scrollYProgress, [0.1, 0.5], [-0.5, 0]);
-  const personalRotate = useTransform(scrollYProgress, [0.1, 0.5], [0.5, 0]);
-
-  /* ── Index: moves sideways ── */
-  const indexX = useSpring(
-    useTransform(scrollYProgress, [0.05, 0.35], [0, 10]),
+  const ctaY = useSpring(
+    useTransform(scrollYProgress, [0.2, 0.55], [15, 0]),
     { stiffness: 80, damping: 20 },
   );
 
-  /* ── Watermark ── */
-  const decorY = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  return (
+    <div
+      ref={sectionRef}
+      className="relative py-16 md:py-24 lg:py-32 overflow-hidden"
+    >
+      {/* Background text */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        style={{ x: bgX }}
+      >
+        <span
+          className="absolute font-display font-medium text-off-white/[0.015] whitespace-nowrap"
+          style={{
+            top: "50%",
+            left: "0",
+            transform: "translateY(-50%)",
+            fontSize: "clamp(4rem, 11vw, 10rem)",
+            letterSpacing: "-0.04em",
+          }}
+        >
+          {handle}
+        </span>
+      </motion.div>
+
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        {/* Section index */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{
+            duration: 0.7,
+            ease: [0.25, 1, 0.5, 1],
+            delay,
+          }}
+          className="mb-10 md:mb-14"
+        >
+          <span className="editorial-label">
+            {number} / {label}
+          </span>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* Left: Title + Handle */}
+          <div className="lg:col-span-8">
+            {/* INSTAGRAM title */}
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: "110%" }}
+                animate={isInView ? { y: "0%" } : {}}
+                transition={{
+                  duration: 1.0,
+                  ease: [0.76, 0, 0.24, 1],
+                  delay,
+                }}
+                className="font-display font-medium leading-[0.88] tracking-[-0.03em] text-off-white"
+                style={{
+                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
+                  wordBreak: "break-word",
+                }}
+              >
+                {subtitle}
+              </motion.h2>
+            </div>
+
+            {/* Handle — scale */}
+            <motion.div
+              className="mt-6 md:mt-8 mb-3"
+              style={{ scale: handleScale, opacity: handleOpacity }}
+            >
+              <span
+                className="font-heading font-semibold tracking-tight block"
+                style={{
+                  fontSize: "clamp(1.8rem, 4vw, 3rem)",
+                  color: accentColor,
+                  wordBreak: "break-word",
+                }}
+              >
+                {handle}
+              </span>
+            </motion.div>
+
+            {/* Tags */}
+            <motion.div
+              className="flex flex-wrap gap-x-3 gap-y-1.5 mt-5"
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{
+                duration: 0.7,
+                ease: [0.25, 1, 0.5, 1],
+                delay: delay + 0.2,
+              }}
+            >
+              {tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="font-body text-[10px] md:text-[11px] font-light tracking-[0.2em] uppercase text-muted/40"
+                >
+                  {tag}
+                  {i < tags.length - 1 && (
+                    <span className="ml-3 text-slate/20">·</span>
+                  )}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right: CTA */}
+          <div className="lg:col-span-4 flex flex-col justify-end">
+            <motion.div
+              className="editorial-divider mb-6 md:mb-8"
+              style={{
+                scaleX: lineScale,
+                transformOrigin: "left",
+              }}
+            />
+
+            <motion.div style={{ y: ctaY }}>
+              <motion.a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor={cursorLabel}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.7,
+                  ease: [0.25, 1, 0.5, 1],
+                  delay: delay + 0.3,
+                }}
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase transition-all duration-500 cursor-none"
+                style={{
+                  border: `1px solid ${accentBorder}`,
+                  color: accentColor,
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = accentColor;
+                  e.currentTarget.style.background = `${accentBorder.replace("0.2", "0.05")}`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = accentBorder;
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                <span>{ctaText}</span>
+                <span className="transition-transform duration-500 group-hover:translate-x-1">
+                  →
+                </span>
+              </motion.a>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function InstagramSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
 
   return (
     <section
       id="instagram"
       ref={sectionRef}
-      className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
+      className="relative overflow-hidden"
     >
-      {/* Watermark */}
-      <motion.div
-        className="absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none select-none"
-        style={{ y: decorY }}
-      >
-        <span className="font-display text-[clamp(5rem,14vw,12rem)] font-medium text-off-white/[0.015] leading-none tracking-tight whitespace-nowrap">
-          INSTAGRAM
-        </span>
-      </motion.div>
-
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section index */}
+      {/* Section heading */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-36 lg:pt-44">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16"
-          style={{ x: indexX }}
+          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+          className="overflow-hidden mb-1"
         >
-          <span className="font-body text-[10px] font-medium tracking-[0.35em] uppercase text-muted/50">
-            05 / Instagram
-          </span>
+          <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white">
+            Edit. Frame. Repeat.
+          </h2>
         </motion.div>
+      </div>
 
-        {/* Heading */}
-        <motion.div
-          className="mb-14 md:mb-18"
-          style={{ y: headingY }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-            className="overflow-hidden mb-1"
-          >
-            <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white">
-              Edit. Frame. Repeat.
-            </h2>
-          </motion.div>
-        </motion.div>
+      {/* Editing Profile */}
+      <InstagramProfile
+        number="04"
+        label="EDITING"
+        subtitle="INSTAGRAM"
+        handle="@mk_ed1tz"
+        tags={["EDITING", "REELS", "SHORTS"]}
+        ctaText="VIEW PROFILE"
+        url={IG_EDITING_URL}
+        cursorLabel="VIEW"
+        accentColor="rgba(200, 130, 200, 0.65)"
+        accentBorder="rgba(200, 130, 200, 0.2)"
+        bgXFrom="5%"
+        bgXTo="-10%"
+        delay={0.1}
+        isInView={isInView}
+      />
 
-        {/* Two accounts — different speeds and directions */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-          {/* Editing — enters from left */}
-          <motion.a
-            href={IG_EDITING_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="VIEW"
-            initial={{ opacity: 0, x: -60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.3, duration: 1, ease: [0.25, 1, 0.5, 1] }}
-            style={{ x: editingX, y: editingY, rotate: editingRotate }}
-            className="group relative bg-dark border border-slate/8 hover:border-slate/15 rounded-sm overflow-hidden transition-all duration-500 cursor-none"
-          >
-            {/* Reel-inspired vertical layout */}
-            <div className="relative p-6 md:p-8 lg:p-10">
-              <span className="inline-block font-body text-[9px] font-medium tracking-[0.3em] uppercase text-accent/50 border border-accent/15 rounded-full px-3 py-1 mb-6">
-                Editing / Reels
-              </span>
+      {/* Separator */}
+      <div className="px-6 md:px-12 lg:px-16">
+        <div className="max-w-[1400px] mx-auto editorial-divider" />
+      </div>
 
-              <h3 className="font-heading text-[clamp(1.5rem,3vw,2.2rem)] font-semibold text-off-white tracking-tight mb-2 group-hover:text-white transition-colors duration-500">
-                @mk_ed1tz
-              </h3>
-              <p className="font-body text-xs text-muted/50 font-light mb-5">
-                The editing page
-              </p>
+      {/* Personal Profile */}
+      <InstagramProfile
+        number="05"
+        label="PERSONAL"
+        subtitle="INSTAGRAM"
+        handle="@mihadd___"
+        tags={["PERSONAL PROFILE"]}
+        ctaText="VIEW PROFILE"
+        url={IG_PERSONAL_URL}
+        cursorLabel="FOLLOW"
+        accentColor="rgba(140, 160, 180, 0.6)"
+        accentBorder="rgba(140, 160, 180, 0.18)"
+        bgXFrom="-6%"
+        bgXTo="8%"
+        delay={0.2}
+        isInView={isInView}
+      />
 
-              {/* Visual grid — reel-like vertical composition */}
-              <div className="grid grid-cols-3 gap-1.5 mb-6">
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="aspect-[3/4] rounded-sm overflow-hidden border border-slate/5">
-                    <div className="w-full h-full" style={{ background: `linear-gradient(135deg, #181b20 0%, #0f1115 ${50 + i * 15}%, #181b20 100%)` }} />
-                  </div>
-                ))}
-              </div>
-
-              <p className="font-body text-[13px] font-light leading-[1.85] text-muted/55 mb-6 max-w-sm">
-                Editing work, reels and YouTube Shorts. A growing collection
-                of visual edits and creative content.
-              </p>
-
-              <div className="flex items-center gap-2">
-                <Camera size={13} className="text-off-white/40" />
-                <span className="font-body text-[11px] font-medium tracking-[0.15em] uppercase text-off-white/50 group-hover:text-off-white/70 transition-colors duration-500">
-                  View Reels
-                </span>
-                <ArrowRight size={12} className="text-off-white/25 group-hover:text-off-white/45 transition-all duration-500 group-hover:translate-x-1" />
-              </div>
-
-              {/* Top accent on hover */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-accent/0 group-hover:bg-accent/25 transition-colors duration-700" />
-            </div>
-          </motion.a>
-
-          {/* Personal — enters from right */}
-          <motion.a
-            href={IG_PERSONAL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cursor="FOLLOW"
-            initial={{ opacity: 0, x: 60 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.45, duration: 1, ease: [0.25, 1, 0.5, 1] }}
-            style={{ x: personalX, y: personalY, rotate: personalRotate }}
-            className="group relative bg-dark border border-slate/8 hover:border-slate/15 rounded-sm overflow-hidden transition-all duration-500 cursor-none"
-          >
-            <div className="relative p-6 md:p-8 lg:p-10">
-              <span className="inline-block font-body text-[9px] font-medium tracking-[0.3em] uppercase text-muted/40 border border-slate/15 rounded-full px-3 py-1 mb-6">
-                Personal
-              </span>
-
-              <h3 className="font-heading text-[clamp(1.5rem,3vw,2.2rem)] font-semibold text-off-white tracking-tight mb-2 group-hover:text-white transition-colors duration-500">
-                @mihadd___
-              </h3>
-              <p className="font-body text-xs text-muted/50 font-light mb-5">
-                Personal account
-              </p>
-
-              {/* Minimal visual — more minimal than editing */}
-              <div className="relative aspect-[16/7] rounded-sm overflow-hidden border border-slate/5 mb-6">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(145deg, #15181d 0%, #101318 50%, #15181d 100%)",
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <User size={24} className="text-off-white/[0.06]" />
-                </div>
-              </div>
-
-              <p className="font-body text-[13px] font-light leading-[1.85] text-muted/55 mb-6 max-w-sm">
-                Personal moments and thoughts — life beyond the edits.
-              </p>
-
-              <div className="flex items-center gap-2">
-                <span className="font-body text-[11px] font-medium tracking-[0.15em] uppercase text-off-white/50 group-hover:text-off-white/70 transition-colors duration-500">
-                  Follow
-                </span>
-                <ArrowRight size={12} className="text-off-white/25 group-hover:text-off-white/45 transition-all duration-500 group-hover:translate-x-1" />
-              </div>
-
-              {/* Top accent on hover */}
-              <div className="absolute top-0 left-0 right-0 h-px bg-off-white/0 group-hover:bg-off-white/8 transition-colors duration-700" />
-            </div>
-          </motion.a>
-        </div>
+      {/* Bottom separator */}
+      <div className="px-6 md:px-12 lg:px-16 pb-0">
+        <div className="max-w-[1400px] mx-auto editorial-divider" />
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
-   YouTube — MK EDITZ · @mkeditz494
-   2K+ stat + editorial video frame composition
+   YouTube — MK EDITZ
+   Typography-based editorial composition
    ═══════════════════════════════════════════ */
 
 import { useRef } from "react";
@@ -11,7 +11,6 @@ import {
   useInView,
   useSpring,
 } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
 
 const YOUTUBE_URL = "https://www.youtube.com/@mkeditz494";
 
@@ -24,36 +23,40 @@ export function YouTubeSection() {
     offset: ["start end", "end start"],
   });
 
-  /* ── Frame: rises from below ── */
-  const frameY = useSpring(
-    useTransform(scrollYProgress, [0.08, 0.5], [80, 0]),
-    { stiffness: 60, damping: 25 },
+  /* ── Title horizontal parallax ── */
+  const titleX = useSpring(
+    useTransform(scrollYProgress, [0.05, 0.55], ["5%", "-5%"]),
+    { stiffness: 50, damping: 30 },
   );
 
-  /* ── Image internal parallax ── */
-  const imageInternalY = useTransform(scrollYProgress, [0.1, 0.6], [-12, 12]);
+  /* ── 2K+ subtle scale ── */
+  const statScale = useTransform(scrollYProgress, [0.1, 0.45], [0.88, 1]);
+  const statOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
-  /* ── Heading: slides from right ── */
-  const headingX = useSpring(
-    useTransform(scrollYProgress, [0.1, 0.5], [50, 0]),
+  /* ── SUBSCRIBERS clip-path reveal ── */
+  const subscribersClip = useTransform(
+    scrollYProgress,
+    [0.15, 0.4],
+    ["inset(0 100% 0 0)", "inset(0 0% 0 0)"],
+  );
+
+  /* ── Tags ── */
+  const tagsY = useSpring(
+    useTransform(scrollYProgress, [0.15, 0.5], [20, 0]),
     { stiffness: 70, damping: 25 },
   );
 
-  /* ── Stats scale in ── */
-  const statsScale = useTransform(scrollYProgress, [0.15, 0.5], [0.85, 1]);
-  const statsOpacity = useTransform(scrollYProgress, [0.15, 0.4], [0, 1]);
-
-  /* ── Line expands ── */
-  const lineScale = useTransform(scrollYProgress, [0.12, 0.45], [0, 1]);
-
-  /* ── CTA moves opposite ── */
-  const ctaX = useSpring(
-    useTransform(scrollYProgress, [0.2, 0.6], [-15, 0]),
+  /* ── CTA ── */
+  const ctaY = useSpring(
+    useTransform(scrollYProgress, [0.2, 0.55], [15, 0]),
     { stiffness: 80, damping: 20 },
   );
 
-  /* ── Watermark ── */
-  const decorY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  /* ── Line ── */
+  const lineScale = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
+
+  /* ── Background text ── */
+  const bgX = useTransform(scrollYProgress, [0, 1], ["-8%", "12%"]);
 
   return (
     <section
@@ -61,171 +64,180 @@ export function YouTubeSection() {
       ref={sectionRef}
       className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
     >
-      {/* Watermark */}
+      {/* ── Background text ── */}
       <motion.div
-        className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none"
-        style={{ y: decorY }}
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        style={{ x: bgX }}
       >
-        <span className="font-display text-[clamp(5rem,14vw,12rem)] font-medium text-off-white/[0.015] leading-none tracking-tight">
+        <span
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-[clamp(5rem,14vw,12rem)] font-medium text-off-white/[0.018] leading-none tracking-tight whitespace-nowrap"
+        >
           MK EDITZ
         </span>
       </motion.div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* Section index */}
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
+        {/* ── Section index ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
           className="mb-12 md:mb-16"
         >
-          <span className="font-body text-[10px] font-medium tracking-[0.35em] uppercase text-muted/50">
-            04 / YouTube
-          </span>
+          <span className="editorial-label">04 / YouTube</span>
         </motion.div>
 
+        {/* ── Main composition ── */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-          {/* ── Left: Video frame ── */}
-          <div className="lg:col-span-7 order-2 lg:order-1">
-            <motion.div style={{ y: frameY }}>
-              {/* Main video frame */}
-              <div
-                className="group relative aspect-video rounded-sm overflow-hidden border border-slate/8 cursor-none"
-                data-cursor="WATCH"
+          {/* ── Left: Typography ── */}
+          <div className="lg:col-span-8">
+            {/* YOUTUBE title — parallax */}
+            <div className="overflow-hidden">
+              <motion.h2
+                initial={{ y: "110%" }}
+                animate={isInView ? { y: "0%" } : {}}
+                transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1] }}
+                className="font-display font-medium leading-[0.85] tracking-[-0.03em] text-off-white"
+                style={{
+                  fontSize: "clamp(3rem, 9vw, 8rem)",
+                  x: titleX,
+                  wordBreak: "break-word",
+                }}
               >
-                {/* Cinematic background with internal parallax */}
-                <motion.div
-                  className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]"
-                  style={{
-                    y: imageInternalY,
-                    background: "linear-gradient(145deg, #16191d 0%, #0c0e11 35%, #111419 65%, #16191d 100%)",
+                YOUTUBE
+              </motion.h2>
+            </div>
+
+            {/* 2K+ stat — scale animation */}
+            <motion.div
+              className="mt-8 md:mt-12 mb-4"
+              style={{ scale: statScale, opacity: statOpacity }}
+            >
+              <span
+                className="font-heading font-bold tracking-tight block"
+                style={{
+                  fontSize: "clamp(3.5rem, 8vw, 7rem)",
+                  lineHeight: "0.9",
+                  color: "rgba(192, 57, 43, 0.8)",
+                }}
+              >
+                2K+
+              </span>
+            </motion.div>
+
+            {/* SUBSCRIBERS — clip-path reveal */}
+            <motion.div
+              className="mb-6 md:mb-8"
+              style={{ clipPath: subscribersClip }}
+            >
+              <span className="font-heading text-sm md:text-base font-medium tracking-[0.2em] uppercase text-muted/60">
+                SUBSCRIBERS
+              </span>
+            </motion.div>
+
+            {/* Tags */}
+            <motion.div
+              className="flex flex-col gap-2 mt-6 md:mt-8"
+              style={{ y: tagsY }}
+            >
+              {["EDITING", "SHORTS", "CREATIVE CONTENT"].map((tag, i) => (
+                <motion.span
+                  key={tag}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{
+                    duration: 0.7,
+                    ease: [0.25, 1, 0.5, 1],
+                    delay: 0.25 + i * 0.08,
                   }}
-                />
-
-                <div
-                  className="absolute top-[30%] right-[15%] w-[35%] h-[25%] pointer-events-none"
-                  style={{
-                    background: "radial-gradient(ellipse at center, rgba(192, 57, 43, 0.07) 0%, transparent 70%)",
-                    filter: "blur(40px)",
-                  }}
-                />
-
-                <div className="absolute inset-4 border border-slate/5 rounded-sm" />
-
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-off-white/10 flex items-center justify-center group-hover:border-off-white/25 transition-all duration-500 group-hover:scale-105">
-                    <Play size={20} className="text-off-white/40 ml-1 group-hover:text-off-white/70 transition-colors duration-500" fill="currentColor" />
-                  </div>
-                </div>
-
-                <div className="absolute bottom-5 left-5">
-                  <span className="font-heading text-[10px] font-medium tracking-[0.3em] uppercase text-off-white/15">
-                    MK EDITZ
-                  </span>
-                </div>
-
-                <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/20 transition-all duration-500" />
-              </div>
-
-              {/* Secondary frames */}
-              <div className="grid grid-cols-3 gap-2 md:gap-3 mt-3">
-                {[{ label: "Shorts" }, { label: "Edits" }, { label: "Reels" }].map((item, i) => (
-                  <motion.div
-                    key={item.label}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: 0.6 + i * 0.1, duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-                    className="group relative aspect-video rounded-sm overflow-hidden border border-slate/6 cursor-none bg-dark-elevated"
-                    data-cursor="VIEW"
-                  >
-                    <div
-                      className="w-full h-full"
-                      style={{ background: `linear-gradient(135deg, #14171c 0%, #0e1014 ${60 + i * 10}%, #14171c 100%)` }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                      <span className="font-body text-[9px] font-medium tracking-[0.2em] uppercase text-off-white/50">
-                        {item.label}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+                  className="font-body text-[11px] md:text-xs font-light tracking-[0.2em] uppercase text-muted/40"
+                >
+                  {tag}
+                </motion.span>
+              ))}
             </motion.div>
           </div>
 
-          {/* ── Right: Text + Stats ── */}
-          <div className="lg:col-span-5 order-1 lg:order-2">
-            <motion.div style={{ x: headingX }}>
+          {/* ── Right: CTA + handle ── */}
+          <div className="lg:col-span-4 flex flex-col justify-between">
+            <div>
+              {/* Handle */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-                className="mb-5"
+                transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: 0.2 }}
+                className="mb-4"
               >
-                <span className="font-heading text-sm font-medium tracking-[0.2em] uppercase text-accent/60">
-                  MK EDITZ
+                <span className="font-heading text-base md:text-lg font-semibold text-off-white/60 tracking-tight">
+                  @mkeditz494
                 </span>
               </motion.div>
 
-              <div className="overflow-hidden mb-2">
-                <motion.h2
-                  initial={{ y: "110%" }}
-                  animate={isInView ? { y: "0%" } : {}}
-                  transition={{ duration: 1.0, ease: [0.76, 0, 0.24, 1] }}
-                  className="font-display text-[clamp(2.5rem,5.5vw,4.5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white"
-                >
-                  Watch the work.
-                </motion.h2>
-              </div>
-
-              {/* Line */}
+              {/* Thin line */}
               <motion.div
-                className="w-full h-px bg-gradient-to-r from-slate/25 to-transparent my-7 md:my-9"
-                style={{ scaleX: lineScale, transformOrigin: "left" }}
+                className="editorial-divider my-6 md:my-8"
+                style={{
+                  scaleX: lineScale,
+                  transformOrigin: "left",
+                }}
               />
 
-              {/* Stats — scale in */}
-              <motion.div
-                className="flex items-center gap-8 mb-7"
-                style={{ scale: statsScale, opacity: statsOpacity }}
-              >
-                <div>
-                  <span className="block font-heading text-2xl md:text-3xl font-semibold text-off-white tracking-tight">2K+</span>
-                  <span className="block font-body text-[10px] font-medium tracking-[0.2em] uppercase text-muted/50 mt-1">Subscribers</span>
-                </div>
-                <div className="w-px h-10 bg-slate/15" />
-                <div>
-                  <span className="block font-heading text-base md:text-lg font-semibold text-off-white/70 tracking-tight">@mkeditz494</span>
-                  <span className="block font-body text-[10px] font-medium tracking-[0.2em] uppercase text-muted/50 mt-1">YouTube Handle</span>
-                </div>
-              </motion.div>
-
+              {/* Description */}
               <motion.p
                 initial={{ opacity: 0, y: 15 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.4, duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-                className="font-body text-sm md:text-[15px] font-light leading-[1.9] text-muted mb-8"
+                transition={{
+                  delay: 0.3,
+                  duration: 0.7,
+                  ease: [0.25, 1, 0.5, 1],
+                }}
+                className="editorial-body text-sm md:text-[15px] max-w-sm mb-8"
               >
-                Editing · Shorts · Creative Content. Every frame crafted
-                with precision and creative intent.
+                Every frame crafted with precision and creative intent.
               </motion.p>
+            </div>
 
-              {/* CTA */}
-              <motion.div style={{ x: ctaX }}>
-                <a
-                  href={YOUTUBE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-cursor="OPEN"
-                  className="group inline-flex items-center gap-3 px-8 py-4 border border-red-500/15 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase text-red-400/70 transition-all duration-500 hover:border-red-400/35 hover:bg-red-400/[0.04] cursor-none"
-                >
-                  <span>Watch on YouTube</span>
-                  <ArrowRight size={13} className="transition-transform duration-500 group-hover:translate-x-1" />
-                </a>
-              </motion.div>
+            {/* CTA */}
+            <motion.div style={{ y: ctaY }}>
+              <motion.a
+                href={YOUTUBE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="WATCH"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{
+                  duration: 0.7,
+                  ease: [0.25, 1, 0.5, 1],
+                  delay: 0.4,
+                }}
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase transition-all duration-500 cursor-none"
+                style={{
+                  border: "1px solid rgba(192, 57, 43, 0.2)",
+                  color: "rgba(192, 57, 43, 0.75)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(192, 57, 43, 0.45)";
+                  e.currentTarget.style.background = "rgba(192, 57, 43, 0.05)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = "rgba(192, 57, 43, 0.2)";
+                  e.currentTarget.style.background = "transparent";
+                }}
+              >
+                <span>WATCH ON YOUTUBE</span>
+                <span className="transition-transform duration-500 group-hover:translate-x-1">
+                  →
+                </span>
+              </motion.a>
             </motion.div>
           </div>
         </div>
+      </div>
+
+      {/* ── Bottom separator ── */}
+      <div className="absolute bottom-0 left-0 right-0 px-6 md:px-12 lg:px-16">
+        <div className="max-w-[1400px] mx-auto editorial-divider" />
       </div>
     </section>
   );

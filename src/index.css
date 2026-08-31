@@ -54,6 +54,16 @@ body {
   cursor: none;
 }
 
+/* ── Overflow Protection ── */
+html,
+body,
+#root {
+  overflow-x: clip;
+  max-width: 100vw;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
 /* ── Focus States (Accessibility) ── */
 a:focus-visible,
 button:focus-visible {
@@ -104,6 +114,76 @@ button:focus-visible {
 
 .font-body {
   font-family: "Inter", sans-serif;
+}
+
+/* ── Editorial Section Utilities ── */
+.editorial-section {
+  padding-left: clamp(20px, 5vw, 100px);
+  padding-right: clamp(20px, 5vw, 100px);
+  padding-top: clamp(60px, 10vh, 120px);
+  padding-bottom: clamp(60px, 10vh, 120px);
+  overflow: hidden;
+}
+
+.editorial-label {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(9px, 1vw, 11px);
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(128, 138, 146, 0.5);
+}
+
+.editorial-heading {
+  font-family: "Playfair Display", "Georgia", serif;
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: #d4dde4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.editorial-mono {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.editorial-body {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  line-height: 1.9;
+  color: #808a92;
+}
+
+.editorial-cta {
+  font-family: "Inter", sans-serif;
+  font-size: clamp(10px, 1.1vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border: 1px solid rgba(185, 197, 206, 0.15);
+  border-radius: 999px;
+  color: rgba(212, 221, 228, 0.7);
+  text-decoration: none;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.editorial-cta:hover {
+  border-color: rgba(212, 221, 228, 0.35);
+  background: rgba(212, 221, 228, 0.03);
+}
+
+.editorial-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(185, 197, 206, 0.18), transparent);
 }
 
 /* ── Film Grain — Ultra Subtle ── */
@@ -174,10 +254,4 @@ button:focus-visible {
 
 .skip-link:focus {
   top: 0;
-}
-
-/* ── Ensure no horizontal overflow ── */
-html, body, #root {
-  overflow-x: hidden;
-  max-width: 100vw;
 }

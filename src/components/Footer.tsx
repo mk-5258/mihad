@@ -34,19 +34,27 @@ export function Footer() {
       className="relative py-20 md:py-28 lg:py-36 border-t border-slate/8 overflow-hidden"
     >
       {/* Background watermark */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-        <span className="font-display text-[clamp(5rem,16vw,14rem)] font-medium text-off-white/[0.012] leading-none tracking-tight">
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none overflow-hidden">
+        <span className="font-display font-medium text-off-white/[0.012] leading-none tracking-tight whitespace-nowrap"
+          style={{ fontSize: "clamp(4rem, 14vw, 12rem)" }}
+        >
           MIHAD
         </span>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         {/* Large MIHAD */}
         <motion.div
           className="mb-8 md:mb-10"
           style={{ y: mihaY, opacity: mihaOpacity }}
         >
-          <h2 className="font-display text-[clamp(3rem,10vw,8rem)] font-medium leading-[0.85] tracking-[-0.04em] text-off-white">
+          <h2
+            className="font-display font-medium leading-[0.85] tracking-[-0.04em] text-off-white"
+            style={{
+              fontSize: "clamp(2.5rem, 9vw, 7rem)",
+              wordBreak: "break-word",
+            }}
+          >
             MIHAD
           </h2>
         </motion.div>
@@ -68,14 +76,14 @@ export function Footer() {
 
         {/* Separator */}
         <motion.div
-          className="w-full h-px bg-gradient-to-r from-slate/18 to-transparent mb-8 md:mb-10"
+          className="editorial-divider mb-8 md:mb-10"
           style={{ scaleX: lineScale, transformOrigin: "left" }}
         />
 
         {/* Bottom row */}
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6">
           <div>
-            <h3 className="font-display text-[clamp(1.2rem,2.5vw,2rem)] font-medium text-off-white/50 leading-tight">
+            <h3 className="font-display text-[clamp(1.1rem,2.3vw,1.8rem)] font-medium text-off-white/50 leading-tight">
               Thank you for visiting.
             </h3>
           </div>
