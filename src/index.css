@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   MIHAD — Design System (Final Polish)
+   ═══════════════════════════════════════════ */
+
+@theme {
+  /* ── Colors ── */
+  --color-dark: #050505;
+  --color-dark-elevated: #0c0c0c;
+  --color-graphite: #24292e;
+  --color-graphite-light: #2d3238;
+  --color-slate: #4a5156;
+  --color-muted: #808a92;
+  --color-light: #b9c5ce;
+  --color-off-white: #d4dde4;
+  --color-white: #f0f4f7;
+  --color-accent: #c0392b;
+  --color-accent-dim: rgba(192, 57, 43, 0.15);
+
+  /* ── Typography ── */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* ── Easing ── */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ── Reset & Base ── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #050505;
+  color: #d4dde4;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: #050505;
+  color: #d4dde4;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── Focus States (Accessibility) ── */
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid rgba(185, 197, 206, 0.4);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Allow default cursor on touch devices */
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4a5156;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #808a92;
+}
+
+/* ── Selection ── */
+::selection {
+  background: rgba(192, 57, 43, 0.25);
+  color: #f0f4f7;
+}
+
+/* ── Typography Utilities ── */
+.font-display {
+  font-family: "Playfair Display", "Georgia", serif;
+}
+
+.font-heading {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.font-body {
+  font-family: "Inter", sans-serif;
+}
+
+/* ── Film Grain — Ultra Subtle ── */
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+.grain-overlay::after {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  animation: grain 8s steps(10) infinite;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .grain-overlay::after {
+    animation: none;
+    opacity: 0.2;
+  }
+  /* Show cursor for keyboard users */
+  body {
+    cursor: auto;
+  }
+}
+
+/* ── Skip to Content (Accessibility) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10001;
+  padding: 0.5rem 1rem;
+  background: #050505;
+  color: #d4dde4;
+  font-size: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(185, 197, 206, 0.2);
+}
+
+.skip-link:focus {
+  top: 0;
+}
