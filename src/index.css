@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════
-   MIHAD — Design System (Final Polish)
+   MIHAD — Design System
    ═══════════════════════════════════════════ */
 
 @theme {
@@ -153,7 +153,6 @@ button:focus-visible {
     animation: none;
     opacity: 0.2;
   }
-  /* Show cursor for keyboard users */
   body {
     cursor: auto;
   }
@@ -175,4 +174,10 @@ button:focus-visible {
 
 .skip-link:focus {
   top: 0;
+}
+
+/* ── Ensure no horizontal overflow ── */
+html, body, #root {
+  overflow-x: hidden;
+  max-width: 100vw;
 }

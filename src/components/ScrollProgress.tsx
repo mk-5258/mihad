@@ -8,11 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 const sections = [
   { id: "hero", label: "HOME", index: "00" },
   { id: "about", label: "ABOUT", index: "01" },
-  { id: "identity", label: "IDENTITY", index: "02" },
+  { id: "platforms", label: "PLATFORMS", index: "02" },
   { id: "community", label: "COMMUNITY", index: "03" },
-  { id: "work", label: "WORK", index: "04" },
+  { id: "work", label: "YOUTUBE", index: "04" },
   { id: "instagram", label: "INSTAGRAM", index: "05" },
-  { id: "socials", label: "SOCIALS", index: "06" },
 ];
 
 export function ScrollProgress() {
@@ -56,7 +55,6 @@ export function ScrollProgress() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Hide on mobile or when near top
   if (!isVisible || scrollPercent < 0.02) return null;
 
   return (
@@ -90,7 +88,6 @@ export function ScrollProgress() {
                 className="relative flex items-center gap-3 cursor-none group py-1"
                 aria-label={`Go to ${section.label}`}
               >
-                {/* Label — visible on active */}
                 <AnimatePresence>
                   {isActive && (
                     <motion.span
@@ -105,7 +102,6 @@ export function ScrollProgress() {
                   )}
                 </AnimatePresence>
 
-                {/* Dot */}
                 <div
                   className={`w-[7px] h-[7px] rounded-full border transition-all duration-500 ${
                     isActive
