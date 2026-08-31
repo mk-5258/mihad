@@ -124,7 +124,7 @@ export function About() {
 
         {/* Body text */}
         <motion.div
-          className="max-w-xl mx-auto mb-14 md:mb-20"
+          className="max-w-xl mx-auto mb-14 md:mb-20 text-center"
           style={{ y: bodyY }}
         >
           <motion.p
@@ -132,6 +132,7 @@ export function About() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1], delay: 0.15 }}
             className="editorial-body text-sm md:text-[15px]"
+            style={{ textAlign: "center", marginLeft: "auto", marginRight: "auto" }}
           >
             Crafting visual stories across YouTube and Instagram, while building
             and leading a worldwide Discord community. What started as a passion
