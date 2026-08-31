@@ -1,5 +1,6 @@
 /* ═══════════════════════════════════════════
    Navbar — Minimal floating navigation
+   Correct section order: About, Community, YouTube, Instagram
    ═══════════════════════════════════════════ */
 
 import { useState, useEffect } from "react";
@@ -7,9 +8,9 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 
 const navLinks = [
   { label: "ABOUT", href: "#about" },
-  { label: "PLATFORMS", href: "#platforms" },
   { label: "COMMUNITY", href: "#community" },
-  { label: "WORK", href: "#work" },
+  { label: "YOUTUBE", href: "#youtube" },
+  { label: "INSTAGRAM", href: "#instagram" },
 ];
 
 export function Navbar() {

@@ -50,8 +50,10 @@ body {
   font-family: "Inter", sans-serif;
   background: #050505;
   color: #d4dde4;
-  overflow-x: hidden;
+  overflow-x: clip;
   cursor: none;
+  width: 100%;
+  min-height: 100dvh;
 }
 
 /* ── Overflow Protection ── */
@@ -132,6 +134,8 @@ button:focus-visible {
   letter-spacing: 0.35em;
   text-transform: uppercase;
   color: rgba(128, 138, 146, 0.5);
+  text-align: center;
+  display: block;
 }
 
 .editorial-heading {
@@ -142,6 +146,7 @@ button:focus-visible {
   color: #d4dde4;
   word-break: break-word;
   overflow-wrap: break-word;
+  text-align: center;
 }
 
 .editorial-mono {
@@ -149,6 +154,7 @@ button:focus-visible {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .editorial-body {
@@ -156,6 +162,7 @@ button:focus-visible {
   font-weight: 300;
   line-height: 1.9;
   color: #808a92;
+  text-align: center;
 }
 
 .editorial-cta {
@@ -166,6 +173,7 @@ button:focus-visible {
   text-transform: uppercase;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 12px;
   padding: 14px 28px;
   border: 1px solid rgba(185, 197, 206, 0.15);
@@ -183,8 +191,33 @@ button:focus-visible {
 .editorial-divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(185, 197, 206, 0.18), transparent);
+  background: linear-gradient(90deg, transparent, rgba(185, 197, 206, 0.18), transparent);
 }
+
+/* ── Centered Section Container ── */
+.section-centered {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Scroll Text Animation Classes ── */
+@keyframes revealUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lineGrow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 
 /* ── Film Grain — Ultra Subtle ── */
 @keyframes grain {

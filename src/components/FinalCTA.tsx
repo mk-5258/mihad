@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   Final CTA — Strong cinematic closing
+   Final CTA — Centered cinematic closing
    ═══════════════════════════════════════════ */
 
 import { useRef } from "react";
@@ -16,26 +16,17 @@ import { MagneticButton } from "./MagneticButton";
 const links = [
   {
     label: "YouTube",
-    handle: "@mkeditz494",
     url: "https://www.youtube.com/@mkeditz494",
     accent: "group-hover:text-red-400/80",
   },
   {
     label: "Discord",
-    handle: "Community Server",
     url: "https://discord.gg/wXSpfBQMqy",
     accent: "group-hover:text-[#5865F2]/80",
   },
   {
-    label: "Instagram Editing",
-    handle: "@mk_ed1tz",
+    label: "Instagram",
     url: "https://www.instagram.com/mk_ed1tz/reels/?__pwa=1#",
-    accent: "group-hover:text-off-white/80",
-  },
-  {
-    label: "Instagram Personal",
-    handle: "@mihadd___",
-    url: "https://www.instagram.com/mihadd___/?__pwa=1#",
     accent: "group-hover:text-off-white/80",
   },
 ];
@@ -49,15 +40,18 @@ export function FinalCTA() {
     offset: ["start end", "end start"],
   });
 
+  /* ── Heading moves upward ── */
   const headingY = useSpring(
     useTransform(scrollYProgress, [0.05, 0.45], [50, -15]),
     { stiffness: 70, damping: 25 },
   );
 
+  /* ── Background text ── */
   const decorY = useTransform(scrollYProgress, [0, 1], [25, -25]);
 
   return (
     <section
+      id="connect"
       ref={sectionRef}
       className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
     >
@@ -66,23 +60,27 @@ export function FinalCTA() {
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none overflow-hidden"
         style={{ y: decorY }}
       >
-        <span className="font-display font-medium text-off-white/[0.012] leading-none tracking-tight whitespace-nowrap"
-          style={{ fontSize: "clamp(4rem, 11vw, 9rem)" }}
+        <span
+          className="font-display font-medium leading-none tracking-tight whitespace-nowrap"
+          style={{
+            fontSize: "clamp(4rem, 11vw, 9rem)",
+            color: "rgba(212, 221, 228, 0.012)",
+          }}
         >
           CONNECT
         </span>
       </motion.div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         {/* Section index */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16"
+          className="mb-12 md:mb-16 text-center"
         >
           <span className="editorial-label">
-            06 / Connect
+            05 / Connect
           </span>
         </motion.div>
 
@@ -95,39 +93,38 @@ export function FinalCTA() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-            className="overflow-hidden mb-2"
+            className="overflow-hidden mb-2 text-center"
           >
             <h2
               className="font-display font-medium leading-[0.95] tracking-[-0.03em] text-off-white"
               style={{
-                fontSize: "clamp(2.2rem, 6.5vw, 5.5rem)",
+                fontSize: "clamp(2.5rem, 7vw, 6rem)",
                 wordBreak: "break-word",
               }}
             >
-              Let&apos;s connect.
+              Let&apos;s
             </h2>
           </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: 0.1 }}
-            className="editorial-body text-sm md:text-[15px] max-w-lg"
+            transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1], delay: 0.08 }}
+            className="overflow-hidden text-center"
           >
-            Find me across platforms. Every link leads somewhere worth exploring.
-          </motion.p>
+            <h2
+              className="font-display font-medium leading-[0.95] tracking-[-0.03em] text-off-white/40"
+              style={{
+                fontSize: "clamp(2.5rem, 7vw, 6rem)",
+                wordBreak: "break-word",
+              }}
+            >
+              Connect.
+            </h2>
+          </motion.div>
         </motion.div>
 
-        {/* Thin separator */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={isInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-          className="editorial-divider mb-10"
-          style={{ transformOrigin: "left" }}
-        />
-
-        {/* Social links — large editorial list */}
-        <div className="space-y-0">
+        {/* Social links — text links, centered */}
+        <div className="flex flex-col items-center gap-6 md:gap-8 mb-12 md:mb-16">
           {links.map((link, i) => (
             <motion.a
               key={link.label}
@@ -138,52 +135,41 @@ export function FinalCTA() {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{
-                delay: 0.25 + i * 0.08,
+                delay: 0.25 + i * 0.1,
                 duration: 0.7,
                 ease: [0.25, 1, 0.5, 1],
               }}
-              className="group relative flex items-center justify-between py-6 md:py-8 border-b border-slate/8 last:border-b-0 cursor-none overflow-hidden"
+              className={`group font-heading text-[clamp(1.5rem,4vw,3rem)] font-semibold tracking-[-0.01em] text-off-white/80 transition-colors duration-500 cursor-none ${link.accent}`}
             >
-              <div className="flex items-baseline gap-3 md:gap-8 min-w-0">
-                <span className="font-body text-[10px] font-medium tracking-[0.3em] text-muted/25 w-6 flex-shrink-0">
-                  0{i + 1}
-                </span>
-                <div className="flex items-baseline gap-3 md:gap-4 min-w-0">
-                  <span
-                    className={`font-heading text-[clamp(1.2rem,3vw,2.5rem)] font-semibold tracking-[-0.01em] text-off-white/80 transition-colors duration-500 ${link.accent} whitespace-nowrap`}
-                  >
-                    {link.label}
-                  </span>
-                  <span className="hidden md:inline font-body text-[12px] font-light text-muted/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 whitespace-nowrap">
-                    {link.handle}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <ArrowRight
-                  size={14}
-                  className="text-muted/0 group-hover:text-muted/50 transition-all duration-500 translate-x-[-8px] group-hover:translate-x-0"
-                />
-              </div>
-
-              {/* Hover accent line */}
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-off-white/0 group-hover:bg-off-white/6 transition-colors duration-700" />
+              {link.label}
+              <ArrowRight
+                size={14}
+                className="inline-block ml-3 text-muted/0 group-hover:text-muted/50 transition-all duration-500 translate-x-[-8px] group-hover:translate-x-0"
+              />
             </motion.a>
           ))}
         </div>
+
+        {/* Thin separator */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
+          className="editorial-divider mb-10 mx-auto max-w-[200px]"
+          style={{ transformOrigin: "center" }}
+        />
 
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mt-12 md:mt-16"
+          transition={{ delay: 0.5, duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
+          className="text-center"
         >
           <MagneticButton
             href="#"
             data-cursor="TOP"
-            className="group flex items-center gap-3 px-7 py-3.5 border border-slate/20 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase text-muted/60 transition-all duration-500 hover:border-off-white/30 hover:text-off-white/70"
+            className="group inline-flex items-center gap-3 px-7 py-3.5 border border-slate/20 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase text-muted/60 transition-all duration-500 hover:border-off-white/30 hover:text-off-white/70"
           >
             <span>Back to Top</span>
             <ArrowRight

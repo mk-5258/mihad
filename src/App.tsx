@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   App — Mihad Portfolio (Compact Cinematic)
+   App — Mihad Portfolio (Centered Cinematic)
    ═══════════════════════════════════════════ */
 
 import { Background } from "./components/Background";
@@ -10,6 +10,7 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { About } from "./components/About";
 import { Platforms } from "./components/Platforms";
+import { YouTubeSection } from "./components/YouTubeSection";
 import { InstagramSection } from "./components/InstagramSection";
 import { FinalCTA } from "./components/FinalCTA";
 import { Footer } from "./components/Footer";
@@ -31,6 +32,7 @@ function App() {
           <Hero />
           <About />
           <Platforms />
+          <YouTubeSection />
           <InstagramSection />
           <FinalCTA />
         </main>

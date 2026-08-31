@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════
    Instagram — Two distinct profiles
-   Typography-based editorial composition
+   Centered editorial composition
+   No duplication — exactly two profiles
    ═══════════════════════════════════════════ */
 
 import { useRef } from "react";
@@ -16,9 +17,7 @@ const IG_EDITING_URL = "https://www.instagram.com/mk_ed1tz/reels/?__pwa=1#";
 const IG_PERSONAL_URL = "https://www.instagram.com/mihadd___/?__pwa=1#";
 
 function InstagramProfile({
-  number,
   label,
-  subtitle,
   handle,
   tags,
   ctaText,
@@ -26,14 +25,11 @@ function InstagramProfile({
   cursorLabel,
   accentColor,
   accentBorder,
-  bgXFrom,
-  bgXTo,
+  direction,
   delay,
   isInView,
 }: {
-  number: string;
   label: string;
-  subtitle: string;
   handle: string;
   tags: string[];
   ctaText: string;
@@ -41,8 +37,7 @@ function InstagramProfile({
   cursorLabel: string;
   accentColor: string;
   accentBorder: string;
-  bgXFrom: string;
-  bgXTo: string;
+  direction: "left" | "right";
   delay: number;
   isInView: boolean;
 }) {
@@ -53,16 +48,22 @@ function InstagramProfile({
     offset: ["start end", "end start"],
   });
 
+  /* ── Handle scale ── */
+  const handleScale = useTransform(scrollYProgress, [0.1, 0.45], [0.92, 1]);
+  const handleOpacity = useTransform(scrollYProgress, [0.1, 0.35], [0, 1]);
+
+  /* ── Background text moves opposite direction ── */
+  const bgXFrom = direction === "left" ? "8%" : "-8%";
+  const bgXTo = direction === "left" ? "-12%" : "12%";
   const bgX = useSpring(
     useTransform(scrollYProgress, [0, 1], [bgXFrom, bgXTo]),
     { stiffness: 50, damping: 30 },
   );
 
-  const handleScale = useTransform(scrollYProgress, [0.1, 0.45], [0.92, 1]);
-  const handleOpacity = useTransform(scrollYProgress, [0.1, 0.35], [0, 1]);
-
+  /* ── Line expand ── */
   const lineScale = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
+  /* ── CTA ── */
   const ctaY = useSpring(
     useTransform(scrollYProgress, [0.2, 0.55], [15, 0]),
     { stiffness: 80, damping: 20 },
@@ -79,13 +80,13 @@ function InstagramProfile({
         style={{ x: bgX }}
       >
         <span
-          className="absolute font-display font-medium text-off-white/[0.015] whitespace-nowrap"
+          className="absolute font-display font-medium whitespace-nowrap left-1/2 -translate-x-1/2"
           style={{
             top: "50%",
-            left: "0",
-            transform: "translateY(-50%)",
+            transform: "translate(-50%, -50%)",
             fontSize: "clamp(4rem, 11vw, 10rem)",
             letterSpacing: "-0.04em",
+            color: "rgba(212, 221, 228, 0.015)",
           }}
         >
           {handle}
@@ -93,132 +94,92 @@ function InstagramProfile({
       </motion.div>
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
-        {/* Section index */}
+        {/* Label */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: 0.7,
-            ease: [0.25, 1, 0.5, 1],
-            delay,
-          }}
-          className="mb-10 md:mb-14"
+          transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay }}
+          className="mb-8 md:mb-10 text-center"
         >
-          <span className="editorial-label">
-            {number} / {label}
+          <span className="editorial-label">{label}</span>
+        </motion.div>
+
+        {/* Handle — large */}
+        <motion.div
+          className="mb-4 text-center"
+          style={{ scale: handleScale, opacity: handleOpacity }}
+        >
+          <span
+            className="font-heading font-semibold tracking-tight block"
+            style={{
+              fontSize: "clamp(2rem, 5vw, 4rem)",
+              color: accentColor,
+              wordBreak: "break-word",
+            }}
+          >
+            {handle}
           </span>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left: Title + Handle */}
-          <div className="lg:col-span-8">
-            {/* INSTAGRAM title */}
-            <div className="overflow-hidden">
-              <motion.h2
-                initial={{ y: "110%" }}
-                animate={isInView ? { y: "0%" } : {}}
-                transition={{
-                  duration: 1.0,
-                  ease: [0.76, 0, 0.24, 1],
-                  delay,
-                }}
-                className="font-display font-medium leading-[0.88] tracking-[-0.03em] text-off-white"
-                style={{
-                  fontSize: "clamp(2.5rem, 6vw, 5rem)",
-                  wordBreak: "break-word",
-                }}
-              >
-                {subtitle}
-              </motion.h2>
-            </div>
-
-            {/* Handle — scale */}
-            <motion.div
-              className="mt-6 md:mt-8 mb-3"
-              style={{ scale: handleScale, opacity: handleOpacity }}
+        {/* Tags */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-8 md:mb-10"
+          initial={{ opacity: 0, y: 15 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: delay + 0.15 }}
+        >
+          {tags.map((tag, i) => (
+            <span
+              key={i}
+              className="font-body text-[10px] md:text-[11px] font-light tracking-[0.2em] uppercase text-muted/40"
             >
-              <span
-                className="font-heading font-semibold tracking-tight block"
-                style={{
-                  fontSize: "clamp(1.8rem, 4vw, 3rem)",
-                  color: accentColor,
-                  wordBreak: "break-word",
-                }}
-              >
-                {handle}
-              </span>
-            </motion.div>
+              {tag}
+              {i < tags.length - 1 && (
+                <span className="ml-3 text-slate/20">·</span>
+              )}
+            </span>
+          ))}
+        </motion.div>
 
-            {/* Tags */}
-            <motion.div
-              className="flex flex-wrap gap-x-3 gap-y-1.5 mt-5"
-              initial={{ opacity: 0, y: 15 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.7,
-                ease: [0.25, 1, 0.5, 1],
-                delay: delay + 0.2,
-              }}
-            >
-              {tags.map((tag, i) => (
-                <span
-                  key={i}
-                  className="font-body text-[10px] md:text-[11px] font-light tracking-[0.2em] uppercase text-muted/40"
-                >
-                  {tag}
-                  {i < tags.length - 1 && (
-                    <span className="ml-3 text-slate/20">·</span>
-                  )}
-                </span>
-              ))}
-            </motion.div>
-          </div>
+        {/* Line */}
+        <motion.div
+          className="editorial-divider mb-8 md:mb-10 mx-auto max-w-[200px]"
+          style={{ scaleX: lineScale, transformOrigin: "center" }}
+        />
 
-          {/* Right: CTA */}
-          <div className="lg:col-span-4 flex flex-col justify-end">
-            <motion.div
-              className="editorial-divider mb-6 md:mb-8"
-              style={{
-                scaleX: lineScale,
-                transformOrigin: "left",
-              }}
-            />
-
-            <motion.div style={{ y: ctaY }}>
-              <motion.a
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cursor={cursorLabel}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.7,
-                  ease: [0.25, 1, 0.5, 1],
-                  delay: delay + 0.3,
-                }}
-                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase transition-all duration-500 cursor-none"
-                style={{
-                  border: `1px solid ${accentBorder}`,
-                  color: accentColor,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = accentColor;
-                  e.currentTarget.style.background = `${accentBorder.replace("0.2", "0.05")}`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = accentBorder;
-                  e.currentTarget.style.background = "transparent";
-                }}
-              >
-                <span>{ctaText}</span>
-                <span className="transition-transform duration-500 group-hover:translate-x-1">
-                  →
-                </span>
-              </motion.a>
-            </motion.div>
-          </div>
-        </div>
+        {/* CTA */}
+        <motion.div
+          className="text-center"
+          style={{ y: ctaY }}
+        >
+          <motion.a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor={cursorLabel}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: delay + 0.25 }}
+            className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-[11px] font-body font-medium tracking-[0.2em] uppercase transition-all duration-500 cursor-none"
+            style={{
+              border: `1px solid ${accentBorder}`,
+              color: accentColor,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = accentColor;
+              e.currentTarget.style.background = `${accentBorder.replace("0.2", "0.05")}`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = accentBorder;
+              e.currentTarget.style.background = "transparent";
+            }}
+          >
+            <span>{ctaText}</span>
+            <span className="transition-transform duration-500 group-hover:translate-x-1">
+              →
+            </span>
+          </motion.a>
+        </motion.div>
       </div>
     </div>
   );
@@ -234,34 +195,31 @@ export function InstagramSection() {
       ref={sectionRef}
       className="relative overflow-hidden"
     >
-      {/* Section heading */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-36 lg:pt-44">
+        {/* Section index */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
-          className="overflow-hidden mb-1"
+          transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
+          className="mb-12 md:mb-16 text-center"
         >
-          <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-[-0.02em] text-off-white">
-            Edit. Frame. Repeat.
-          </h2>
+          <span className="editorial-label">
+            04 / Instagram
+          </span>
         </motion.div>
       </div>
 
-      {/* Editing Profile */}
+      {/* Editing Profile — enters from left */}
       <InstagramProfile
-        number="04"
-        label="EDITING"
-        subtitle="INSTAGRAM"
+        label="Editing"
         handle="@mk_ed1tz"
-        tags={["EDITING", "REELS", "SHORTS"]}
-        ctaText="VIEW PROFILE"
+        tags={["Editing", "Reels", "Shorts"]}
+        ctaText="View Editing Page"
         url={IG_EDITING_URL}
         cursorLabel="VIEW"
         accentColor="rgba(200, 130, 200, 0.65)"
         accentBorder="rgba(200, 130, 200, 0.2)"
-        bgXFrom="5%"
-        bgXTo="-10%"
+        direction="left"
         delay={0.1}
         isInView={isInView}
       />
@@ -271,20 +229,17 @@ export function InstagramSection() {
         <div className="max-w-[1400px] mx-auto editorial-divider" />
       </div>
 
-      {/* Personal Profile */}
+      {/* Personal Profile — enters from right */}
       <InstagramProfile
-        number="05"
-        label="PERSONAL"
-        subtitle="INSTAGRAM"
+        label="Personal"
         handle="@mihadd___"
-        tags={["PERSONAL PROFILE"]}
-        ctaText="VIEW PROFILE"
+        tags={["Personal Profile"]}
+        ctaText="View Profile"
         url={IG_PERSONAL_URL}
         cursorLabel="FOLLOW"
         accentColor="rgba(140, 160, 180, 0.6)"
         accentBorder="rgba(140, 160, 180, 0.18)"
-        bgXFrom="-6%"
-        bgXTo="8%"
+        direction="right"
         delay={0.2}
         isInView={isInView}
       />

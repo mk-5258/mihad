@@ -8,10 +8,10 @@ import { motion, AnimatePresence } from "framer-motion";
 const sections = [
   { id: "hero", label: "HOME", index: "00" },
   { id: "about", label: "ABOUT", index: "01" },
-  { id: "platforms", label: "PLATFORMS", index: "02" },
-  { id: "community", label: "COMMUNITY", index: "03" },
-  { id: "work", label: "YOUTUBE", index: "04" },
-  { id: "instagram", label: "INSTAGRAM", index: "05" },
+  { id: "community", label: "COMMUNITY", index: "02" },
+  { id: "youtube", label: "YOUTUBE", index: "03" },
+  { id: "instagram", label: "INSTAGRAM", index: "04" },
+  { id: "connect", label: "CONNECT", index: "05" },
 ];
 
 export function ScrollProgress() {

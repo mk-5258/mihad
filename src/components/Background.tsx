@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════
    Background — Intelligent scroll-reactive
-   Subtle gradients, mouse light, thin lines
+   Subtle gradients, atmospheric text, thin lines
    ═══════════════════════════════════════════ */
 
 import { useEffect, useRef } from "react";
@@ -46,16 +46,20 @@ export function Background() {
     };
   }, []);
 
+  /* ── Slow gradient movement with scroll ── */
+  const gradientY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   return (
     <div className="fixed inset-0 z-0 overflow-hidden">
       {/* Base dark layer */}
       <div className="absolute inset-0 bg-dark" />
 
-      {/* Subtle gradient overlay */}
-      <div
+      {/* Subtle gradient overlay — slow movement */}
+      <motion.div
         className="absolute inset-0"
         style={{
           background: "linear-gradient(180deg, #0a0a0a 0%, #050505 30%, #080808 70%, #050505 100%)",
+          y: gradientY,
         }}
       />
 
@@ -105,11 +109,9 @@ export function Background() {
         }}
       />
 
-      {/* Subtle grid lines — very faint */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02]">
-        <div className="absolute top-0 bottom-0 left-[25%] w-px bg-off-white/20" />
-        <div className="absolute top-0 bottom-0 left-[50%] w-px bg-off-white/20" />
-        <div className="absolute top-0 bottom-0 left-[75%] w-px bg-off-white/20" />
+      {/* Subtle center line */}
+      <div className="absolute top-0 bottom-0 left-1/2 w-px pointer-events-none opacity-[0.015]">
+        <div className="w-full h-full bg-off-white/20" />
       </div>
     </div>
   );
