@@ -150,7 +150,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 1, 0.5, 1] } },
               }}
-              className="mb-8 md:mb-10"
+              className="mb-10 md:mb-14"
               style={{ x: labelX }}
             >
               <span className="inline-block font-body text-[10px] md:text-[11px] font-medium tracking-[0.35em] uppercase text-muted/60 border border-slate/15 rounded-full px-5 py-2">
@@ -189,7 +189,7 @@ export function Hero() {
                 hidden: { clipPath: "inset(0 100% 0 0)" },
                 visible: { clipPath: "inset(0 0% 0 0)", transition: { duration: 1.4, ease: [0.76, 0, 0.24, 1] } },
               }}
-              className="w-full max-w-[180px] h-px my-8 md:my-10"
+              className="w-full max-w-[180px] h-px my-10 md:my-14"
               style={{
                 background: "linear-gradient(90deg, transparent, rgba(128, 138, 146, 0.35), transparent)",
                 scaleX: lineScale,
@@ -220,7 +220,7 @@ export function Hero() {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.25, 1, 0.5, 1] } },
               }}
-              className="mt-12 md:mt-16"
+              className="mt-16 md:mt-20"
               style={{ y: ctaY, opacity: ctaOpacity }}
             >
               <MagneticButton

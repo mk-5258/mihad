@@ -49,7 +49,7 @@ export function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
+      className="relative py-32 md:py-48 lg:py-60 overflow-hidden"
     >
       {/* Background watermark */}
       <motion.div
@@ -73,7 +73,7 @@ export function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16 text-center"
+          className="mb-16 md:mb-20 text-center"
         >
           <span className="editorial-label">
             01 / About
@@ -82,7 +82,7 @@ export function About() {
 
         {/* Title: MIHAD */}
         <motion.div
-          className="mb-4 text-center"
+          className="mb-6 text-center"
           style={{ y: titleY }}
         >
           <motion.div
@@ -102,7 +102,7 @@ export function About() {
 
         {/* Subtitle: Creator · Editor · Community Owner */}
         <motion.div
-          className="mb-10 md:mb-14 text-center"
+          className="mb-14 md:mb-20 text-center"
           style={{ y: subtitleY }}
         >
           <motion.div
@@ -118,13 +118,13 @@ export function About() {
 
         {/* Expanding line */}
         <motion.div
-          className="editorial-divider mb-10 md:mb-14 mx-auto max-w-[200px]"
+          className="editorial-divider mb-14 md:mb-20 mx-auto max-w-[200px]"
           style={{ scaleX: lineScale, transformOrigin: "center" }}
         />
 
         {/* Body text */}
         <motion.div
-          className="max-w-xl mx-auto mb-14 md:mb-20 text-center"
+          className="max-w-xl mx-auto mb-20 md:mb-28 text-center"
           style={{ y: bodyY }}
         >
           <motion.p
@@ -145,7 +145,7 @@ export function About() {
           initial={{ opacity: 0, y: 25 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3, duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-10 sm:gap-16"
         >
           {[
             { value: "2K+", label: "YouTube Subscribers" },
@@ -156,7 +156,7 @@ export function About() {
               <span className="block font-heading text-2xl md:text-3xl lg:text-4xl font-semibold text-off-white tracking-tight">
                 {stat.value}
               </span>
-              <span className="block font-body text-[10px] md:text-[11px] font-light tracking-[0.15em] uppercase text-muted/50 mt-2">
+              <span className="block font-body text-[10px] md:text-[11px] font-light tracking-[0.15em] uppercase text-muted/50 mt-3">
                 {stat.label}
               </span>
             </div>

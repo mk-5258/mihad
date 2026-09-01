@@ -43,7 +43,7 @@ export function Footer() {
   return (
     <footer
       ref={footerRef}
-      className="relative py-20 md:py-28 lg:py-36 border-t border-slate/8 overflow-hidden"
+      className="relative py-28 md:py-36 lg:py-48 border-t border-slate/8 overflow-hidden"
     >
       {/* Background watermark */}
       <motion.div
@@ -64,7 +64,7 @@ export function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         {/* Large MIHAD — centered */}
         <motion.div
-          className="mb-8 md:mb-10 text-center"
+          className="mb-10 md:mb-14 text-center"
           style={{ y: mihaY, opacity: mihaOpacity }}
         >
           <h2
@@ -80,7 +80,7 @@ export function Footer() {
 
         {/* Roles — centered */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mb-8 md:mb-10"
+          className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 mb-10 md:mb-14"
           style={{ y: rolesY }}
         >
           {roles.map((role, i) => (
@@ -95,7 +95,7 @@ export function Footer() {
 
         {/* Animated growing line — centered */}
         <motion.div
-          className="mx-auto mb-8 md:mb-10"
+          className="mx-auto mb-10 md:mb-14"
           style={{
             scaleX: lineScale,
             transformOrigin: "center",
@@ -112,7 +112,7 @@ export function Footer() {
 
         {/* Platform links — centered */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-8 md:mb-10"
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-10 md:mb-14"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.3 }}

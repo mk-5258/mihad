@@ -72,7 +72,7 @@ function InstagramProfile({
   return (
     <div
       ref={sectionRef}
-      className="relative py-16 md:py-24 lg:py-32 overflow-hidden"
+      className="relative py-24 md:py-32 lg:py-44 overflow-hidden"
     >
       {/* Background text */}
       <motion.div
@@ -99,14 +99,14 @@ function InstagramProfile({
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay }}
-          className="mb-8 md:mb-10 text-center"
+          className="mb-10 md:mb-14 text-center"
         >
           <span className="editorial-label">{label}</span>
         </motion.div>
 
         {/* Handle — large */}
         <motion.div
-          className="mb-4 text-center"
+          className="mb-6 text-center"
           style={{ scale: handleScale, opacity: handleOpacity }}
         >
           <span
@@ -123,7 +123,7 @@ function InstagramProfile({
 
         {/* Tags */}
         <motion.div
-          className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-8 md:mb-10"
+          className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-12 md:mb-16"
           initial={{ opacity: 0, y: 15 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: delay + 0.15 }}
@@ -143,7 +143,7 @@ function InstagramProfile({
 
         {/* Line */}
         <motion.div
-          className="editorial-divider mb-8 md:mb-10 mx-auto max-w-[200px]"
+          className="editorial-divider mb-12 md:mb-16 mx-auto max-w-[200px]"
           style={{ scaleX: lineScale, transformOrigin: "center" }}
         />
 
@@ -195,13 +195,13 @@ export function InstagramSection() {
       ref={sectionRef}
       className="relative overflow-hidden"
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-24 md:pt-36 lg:pt-44">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 pt-32 md:pt-48 lg:pt-60">
         {/* Section index */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16 text-center"
+          className="mb-16 md:mb-20 text-center"
         >
           <span className="editorial-label">
             04 / Instagram

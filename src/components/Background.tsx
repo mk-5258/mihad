@@ -3,11 +3,37 @@
    Subtle gradients, atmospheric text, thin lines
    ═══════════════════════════════════════════ */
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+
+const PETAL_COUNT = 22;
+const PETAL_SHAPES = ["petal-a", "petal-b", "petal-c", "petal-d", "petal-e"];
+
+function generatePetals() {
+  return Array.from({ length: PETAL_COUNT }, (_, i) => {
+    const seed = (i * 7919 + 1) % 9973;
+    const rand = (offset: number) => ((seed + offset * 1301) % 9973) / 9973;
+
+    const size =
+      i < 2 ? 14 + rand(0) * 6 :
+      i < 6 ? 8 + rand(0) * 5 :
+      i < 14 ? 4 + rand(0) * 4 :
+      2 + rand(0) * 3;
+
+    return {
+      left: rand(1) * 100,
+      size,
+      opacity: 0.02 + rand(2) * 0.05,
+      duration: 22 + rand(3) * 28,
+      delay: -(rand(4) * 45),
+      shape: PETAL_SHAPES[i % PETAL_SHAPES.length],
+    };
+  });
+}
 
 export function Background() {
   const { scrollYProgress } = useScroll();
+  const petals = useMemo(() => generatePetals(), []);
 
   const lightX = useTransform(scrollYProgress, [0, 1], ["40%", "60%"]);
   const lightY = useTransform(scrollYProgress, [0, 1], ["20%", "70%"]);
@@ -112,6 +138,24 @@ export function Background() {
       {/* Subtle center line */}
       <div className="absolute top-0 bottom-0 left-1/2 w-px pointer-events-none opacity-[0.015]">
         <div className="w-full h-full bg-off-white/20" />
+      </div>
+
+      {/* Floating white petals / particles */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {petals.map((p, i) => (
+          <div
+            key={i}
+            className={`petal ${p.shape}`}
+            style={{
+              left: `${p.left}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
+              background: `rgba(240, 244, 247, ${p.opacity})`,
+              "--petal-duration": `${p.duration}s`,
+              "--petal-delay": `${p.delay}s`,
+            } as React.CSSProperties}
+          />
+        ))}
       </div>
     </div>
   );

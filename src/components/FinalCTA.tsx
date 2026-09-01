@@ -53,7 +53,7 @@ export function FinalCTA() {
     <section
       id="connect"
       ref={sectionRef}
-      className="relative py-24 md:py-36 lg:py-44 overflow-hidden"
+      className="relative py-32 md:py-48 lg:py-60 overflow-hidden"
     >
       {/* Background watermark */}
       <motion.div
@@ -77,7 +77,7 @@ export function FinalCTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1] }}
-          className="mb-12 md:mb-16 text-center"
+          className="mb-16 md:mb-20 text-center"
         >
           <span className="editorial-label">
             05 / Connect
@@ -86,7 +86,7 @@ export function FinalCTA() {
 
         {/* Heading */}
         <motion.div
-          className="mb-12 md:mb-16"
+          className="mb-16 md:mb-24"
           style={{ y: headingY }}
         >
           <motion.div
@@ -124,7 +124,7 @@ export function FinalCTA() {
         </motion.div>
 
         {/* Social links — text links, centered */}
-        <div className="flex flex-col items-center gap-6 md:gap-8 mb-12 md:mb-16">
+        <div className="flex flex-col items-center gap-8 md:gap-10 mb-16 md:mb-20">
           {links.map((link, i) => (
             <motion.a
               key={link.label}
@@ -155,7 +155,7 @@ export function FinalCTA() {
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : {}}
           transition={{ duration: 1.4, ease: [0.76, 0, 0.24, 1], delay: 0.2 }}
-          className="editorial-divider mb-10 mx-auto max-w-[200px]"
+          className="editorial-divider mb-14 mx-auto max-w-[200px]"
           style={{ transformOrigin: "center" }}
         />
 
